@@ -28,7 +28,7 @@ export default function AboutSection() {
             <div className="relative">
               <div className="relative rounded-3xl overflow-hidden shadow-premium-lg">
                 <Image
-                  src="/images/products.webp"
+                  src="/images/factoryy.webp"
                   alt="Parth Plasto Pack Manufacturing Facility"
                   width={640}
                   height={480}
