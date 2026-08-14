@@ -33,7 +33,7 @@ export default function UsersPage() {
             loadUsers();
         }
     }
-  }, [status, session]);
+  }, [status, session, router]);
 
   const loadUsers = async () => {
     setLoading(true);

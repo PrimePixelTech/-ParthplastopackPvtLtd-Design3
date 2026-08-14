@@ -5,22 +5,35 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description"
-    content="Parth Plasto Pack - Manufacturer of Pharma & Nutraceutical Plastic Packaging Products. Quality and Custom Solutions." />
-  <meta name="description"
-    content="Parth Plasto Pack - Leading Manufacturer of High-Quality Plastic Containers in India.">
+    content="Parth Plasto Pack - Leading Manufacturer of High-Quality Plastic Containers, Pharma & Nutraceutical Packaging Products in India.">
   <meta name="keywords"
     content="Plastic Containers, Packaging, Parth Plasto Pack, Industrial Packaging, Food Grade Containers">
   <meta name="author" content="Parth Plasto Pack">
   <title>Parth Plasto Pack</title>
+
+  <!-- Preconnect to CDN origins for faster resource loading -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="preconnect" href="https://code.jquery.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Critical CSS - Font Awesome (needed for icons above fold) -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css" />
-  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
-  <!-- Owl Carousel Core CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
 
-  <!-- Optional Owl Theme (for dots and nav styles) -->
+  <!-- AOS CSS - deferred (not needed for first paint) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" /></noscript>
+
+  <!-- Owl Carousel CSS - deferred (carousel initializes after JS loads) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" /></noscript>
+
   <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" />
+    href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" /></noscript>
 
+  <!-- Main merged CSS (single file - no @import waterfall) -->
   <link rel="stylesheet" href="./assets/css/style.css" />
 </head>
 
@@ -31,7 +44,7 @@
 
   <div class="preloader" id="preloader">
     <div class="spinner">
-      <img src="./assets/images/logo1.webp" alt="Loading..." />
+      <img src="./assets/images/logo1.webp" alt="Loading..." width="90" height="90" />
     </div>
     <span class="preloader-text">Parth Plasto Pack</span>
     <div class="preloader-bar"></div>
@@ -40,7 +53,7 @@
     <div class="logo">
       <a href="#preloader" id="logo-link" aria-label="Return to homepage">
         <h1 class="logo-name">
-          <img src="./assets/images/logo1.webp" class="header-logo" alt="Logo" />
+          <img src="./assets/images/logo1.webp" class="header-logo" alt="Logo" width="56" height="56" />
         </h1>
       </a>
       <nav>
@@ -71,19 +84,19 @@
   <div class="owl-carousel owl-theme">
     <div class="item">
       <div class="image-container">
-        <img src="./assets/images/banner1.webp" alt="Banner Slide 1" class="image" />
+        <img src="./assets/images/banner1.webp" alt="Banner Slide 1" class="image" fetchpriority="high" width="1200" height="600" />
 
       </div>
     </div>
     <div class="item">
       <div class="image-container">
-        <img src="./assets/images/Banner2.webp" alt="Banner Slide 2" class="image" />
+        <img src="./assets/images/Banner2.webp" alt="Banner Slide 2" class="image" loading="lazy" width="1200" height="600" />
 
       </div>
     </div>
     <div class="item">
       <div class="image-container">
-        <img src="./assets/images/Banner3.webp" alt="Banner Slide 3" class="image" />
+        <img src="./assets/images/Banner3.webp" alt="Banner Slide 3" class="image" loading="lazy" width="1200" height="600" />
 
       </div>
     </div>
@@ -292,29 +305,29 @@
         <h2 data-aos="fade-up">Our Facility</h2>
         <div class="gallery">
           <div class="gallery-item">
-            <img src="./assets/images/machine1.webp" alt="Factory Exterior" />
+            <img src="./assets/images/machine1.webp" alt="Factory Exterior" loading="lazy" width="400" height="260" />
             <div class="gallery-caption">Modern Manufacturing Facility</div>
           </div>
           <div class="gallery-item">
-            <img src="./assets/images/advance.webp" alt="Production Line" />
+            <img src="./assets/images/advance.webp" alt="Production Line" loading="lazy" width="400" height="260" />
             <div class="gallery-caption">Advanced Production Line</div>
           </div>
           <a href="./product.html">
             <div class="gallery-item">
-              <img src="./assets/images/ourproduct.webp" alt="Product Showcase" />
+              <img src="./assets/images/ourproduct.webp" alt="Product Showcase" loading="lazy" width="400" height="260" />
               <div class="gallery-caption">Our Product Range</div>
             </div>
           </a>
           <div class="gallery-item">
-            <img src="./assets/images/quality.webp" alt="Quality Check" />
+            <img src="./assets/images/quality.webp" alt="Quality Check" loading="lazy" width="400" height="260" />
             <div class="gallery-caption">Quality Inspection</div>
           </div>
           <div class="gallery-item">
-            <img src="./assets/images/team.webp" alt="Team Photo" />
+            <img src="./assets/images/team.webp" alt="Team Photo" loading="lazy" width="400" height="260" />
             <div class="gallery-caption">Our Dedicated Team</div>
           </div>
           <div class="gallery-item">
-            <img src="./assets/images/storges.webp" alt="Warehouse" />
+            <img src="./assets/images/storges.webp" alt="Warehouse" loading="lazy" width="400" height="260" />
             <div class="gallery-caption">Storage & Distribution</div>
           </div>
         </div>
@@ -386,10 +399,10 @@
       <div class="testimonials">
         <!-- CEO Testimonial -->
         <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
-          <img src="./assets/images/ceo.png" alt="CEO Photo" class="testimonial-img">
+          <img src="./assets/images/ceo.png" alt="CEO Photo" class="testimonial-img" loading="lazy" width="120" height="120">
           <p class="testimonial-quote">
-            “We built this company to solve problems that really matter. Every day, we strive to push boundaries and
-            create lasting impact.”
+            "We built this company to solve problems that really matter. Every day, we strive to push boundaries and
+            create lasting impact."
           </p>
           <h3 class="testimonial-name">Haresh Dhorajiya</h3>
           <p class="testimonial-role">CEO & Founder</p>
@@ -397,10 +410,10 @@
 
         <!-- Co-Founder Testimonial -->
         <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
-          <img src="./assets/images/cofounde.png" alt="Co-Founder Photo" class="testimonial-img">
+          <img src="./assets/images/cofounde.png" alt="Co-Founder Photo" class="testimonial-img" loading="lazy" width="120" height="120">
           <p class="testimonial-quote">
-            “Innovation drives us. We believe in building with purpose and empowering people through smart, accessible
-            technology.”
+            "Innovation drives us. We believe in building with purpose and empowering people through smart, accessible
+            technology."
           </p>
           <h3 class="testimonial-name">Gautam Thummar</h3>
           <p class="testimonial-role">CEO & Co-Founder</p>
@@ -515,8 +528,9 @@
         </a>
 
       </div>
+      <!-- Lazy-loaded Google Maps iframe -->
       <iframe
-        src="https://www.google.com/maps?q=11,%20Swagat%20Ind.%20Park-2,%20Indore%20-%20Ahmedabad%20Highway,%20Nr.%20Bhavda%20Patiya,%20Kuha,%20Ahmedabad&output=embed"
+        data-src="https://www.google.com/maps?q=11,%20Swagat%20Ind.%20Park-2,%20Indore%20-%20Ahmedabad%20Highway,%20Nr.%20Bhavda%20Patiya,%20Kuha,%20Ahmedabad&output=embed"
         width="100%" height="250" style="border:0; border-radius: 8px;" allowfullscreen="" loading="lazy"
         title="Google Maps location of Parth Plasto Pack factory" aria-label="Interactive map showing company location"
         referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -590,23 +604,15 @@
     <span id="toastMessage"></span>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-  <script>
-    AOS.init({
-      once: true,
-      offset: 80,
-      duration: 800,
-      easing: 'ease-out-cubic'
-    });
-  </script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js" defer></script>
   <!-- jQuery (required for Owl Carousel) -->
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" defer></script>
 
   <!-- Owl Carousel JS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" defer></script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
-  <script src="./assets/javascript/script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js" defer></script>
+  <script src="./assets/javascript/script.js" defer></script>
 </body>
 
 </html>

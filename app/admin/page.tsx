@@ -55,7 +55,7 @@ export default function AdminDashboardPage() {
     <div className="space-y-8">
       <div>
         <h1 className="text-3xl font-bold tracking-tight text-slate-900">Dashboard Overview</h1>
-        <p className="text-slate-500 mt-2">Welcome back, Admin! Here is what's happening today.</p>
+        <p className="text-slate-500 mt-2">Welcome back, Admin! Here is what&apos;s happening today.</p>
       </div>
 
       <motion.div

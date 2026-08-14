@@ -55,7 +55,7 @@ export default function NotFound() {
             Oops! Like a jar missing its cap.
           </h2>
           <p className="text-lg text-slate-600 mb-8 max-w-lg mx-auto">
-            We searched every warehouse and production line, but we couldn't find the page you're looking for. It might have been moved, deleted, or never existed!
+            We searched every warehouse and production line, but we couldn&apos;t find the page you&apos;re looking for. It might have been moved, deleted, or never existed!
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

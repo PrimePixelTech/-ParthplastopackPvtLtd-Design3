@@ -52,6 +52,8 @@ const scrollSections = [
   { id: "contact-page", nav: "contact" },
 ];
 
+// Throttle scroll handler with requestAnimationFrame for smoother performance
+let scrollTicking = false;
 function updateOnScroll() {
   const scrollY = window.scrollY;
 
@@ -78,23 +80,44 @@ function updateOnScroll() {
   });
 }
 
-window.addEventListener("scroll", updateOnScroll, { passive: true });
+window.addEventListener("scroll", function () {
+  if (!scrollTicking) {
+    requestAnimationFrame(function () {
+      updateOnScroll();
+      scrollTicking = false;
+    });
+    scrollTicking = true;
+  }
+}, { passive: true });
 updateOnScroll();
 
 backToTop?.addEventListener("click", () => {
   window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
-// --- Preloader ---
-window.addEventListener("load", () => {
+// --- Preloader: use DOMContentLoaded + short delay (NOT window.load) ---
+// This makes the page interactive immediately instead of waiting for all images
+function hidePreloader() {
   const preloader = document.getElementById("preloader");
+  if (!preloader) return;
   gsap.to(preloader, {
     opacity: 0,
-    duration: 0.6,
-    delay: 0.3,
+    duration: 0.5,
+    delay: 0.2,
     onComplete: () => (preloader.style.display = "none"),
   });
-});
+}
+
+// Try to hide preloader as soon as DOM is ready
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", function () {
+    // Small delay to let critical CSS/images render
+    setTimeout(hidePreloader, 300);
+  });
+} else {
+  // DOM already loaded
+  setTimeout(hidePreloader, 300);
+}
 
 // --- Header entrance ---
 const tl = gsap.timeline();
@@ -102,17 +125,28 @@ tl.from(".header-logo", { y: -60, duration: 0.8, ease: "power3.out", opacity: 0 
 tl.from(".header-li", { y: -40, stagger: 0.08, opacity: 0, duration: 0.6, ease: "power2.out" }, "-=0.4");
 
 // --- Banner carousel ---
-$(".owl-carousel").owlCarousel({
-  loop: true,
-  margin: 0,
-  nav: false,
-  dots: true,
-  autoplay: true,
-  autoplayTimeout: 5000,
-  autoplayHoverPause: true,
-  smartSpeed: 800,
-  responsive: { 0: { items: 1 } },
-});
+// Wait for jQuery to load (since it's deferred) before initializing Owl Carousel
+function initOwlCarousel() {
+  if (typeof $ !== "undefined" && $.fn.owlCarousel) {
+    $(".owl-carousel").owlCarousel({
+      loop: true,
+      margin: 0,
+      nav: false,
+      dots: true,
+      autoplay: true,
+      autoplayTimeout: 5000,
+      autoplayHoverPause: true,
+      smartSpeed: 800,
+      responsive: { 0: { items: 1 } },
+    });
+
+    $(".owl-carousel").on("changed.owl.carousel", animateBannerOverlay);
+    setTimeout(animateBannerOverlay, 500);
+  } else {
+    // jQuery not loaded yet, retry
+    setTimeout(initOwlCarousel, 50);
+  }
+}
 
 function animateBannerOverlay() {
   gsap.fromTo(".owl-item.active .banner-overlay h2", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.7, ease: "power2.out" });
@@ -120,8 +154,8 @@ function animateBannerOverlay() {
   gsap.fromTo(".owl-item.active .banner-cta", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7, delay: 0.3, ease: "power2.out" });
 }
 
-$(".owl-carousel").on("changed.owl.carousel", animateBannerOverlay);
-setTimeout(animateBannerOverlay, 500);
+// Start trying to init carousel after a brief delay
+setTimeout(initOwlCarousel, 100);
 
 // --- DOM ready ---
 document.addEventListener("DOMContentLoaded", function () {
@@ -280,6 +314,37 @@ document.addEventListener("DOMContentLoaded", function () {
     input.addEventListener("focus", () => gsap.to(input, { scale: 1.01, duration: 0.2 }));
     input.addEventListener("blur", () => gsap.to(input, { scale: 1, duration: 0.2 }));
   });
+
+  // --- Lazy load Google Maps iframe ---
+  const mapIframe = document.querySelector('iframe[data-src]');
+  if (mapIframe) {
+    new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            mapIframe.src = mapIframe.dataset.src;
+            observer.unobserve(mapIframe);
+          }
+        });
+      },
+      { rootMargin: "200px" } // Start loading 200px before visible
+    ).observe(mapIframe);
+  }
+
+  // --- Init AOS (wait for it to load since it's deferred) ---
+  function initAOS() {
+    if (typeof AOS !== "undefined") {
+      AOS.init({
+        once: true,
+        offset: 80,
+        duration: 800,
+        easing: 'ease-out-cubic'
+      });
+    } else {
+      setTimeout(initAOS, 50);
+    }
+  }
+  initAOS();
 });
 
 // --- Counter ---

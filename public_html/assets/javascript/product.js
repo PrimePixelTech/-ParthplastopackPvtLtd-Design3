@@ -365,12 +365,20 @@ const productsData = [
 
 document.addEventListener("DOMContentLoaded", function () {
   // --- INITIALIZATION ---
-  AOS.init({
-    duration: 800,
-    easing: "ease-in-out",
-    once: true,
-    offset: 50,
-  });
+  // Wait for AOS to load (deferred script)
+  function initAOS() {
+    if (typeof AOS !== "undefined") {
+      AOS.init({
+        duration: 800,
+        easing: "ease-in-out",
+        once: true,
+        offset: 50,
+      });
+    } else {
+      setTimeout(initAOS, 50);
+    }
+  }
+  initAOS();
 
   renderAllProducts();
   setupEventListeners();
@@ -392,7 +400,7 @@ document.addEventListener("DOMContentLoaded", function () {
     gsap.set(cards, { opacity: 0, y: 35 });
   }
 
-  // Fade out loader after a premium transition delay (800ms)
+  // Fade out loader faster (400ms instead of 800ms)
   setTimeout(() => {
     showLoading(false, () => {
       if (allSection) {
@@ -411,7 +419,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }, "-=0.2");
       }
     });
-  }, 800);
+  }, 400);
 });
 
 // --- DYNAMIC RENDERING ---
@@ -563,7 +571,7 @@ function filterProductsByCategory(category) {
   }
 
   showLoading(true, () => {
-    // Show spinner completely for 450ms, then swap categories and fade spinner out
+    // Show spinner completely for 250ms, then swap categories and fade spinner out
     setTimeout(() => {
       if (currentSection) {
         currentSection.classList.add("hidden");
@@ -600,7 +608,7 @@ function filterProductsByCategory(category) {
           AOS.refresh();
         }, 100);
       });
-    }, 450);
+    }, 250);
   });
 }
 

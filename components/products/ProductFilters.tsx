@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { Search, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import Image from 'next/image';
 
 interface ProductFiltersProps {
   categories: any[];
@@ -67,7 +68,7 @@ export default function ProductFilters({
             >
               <span className="text-base shrink-0 flex items-center justify-center">
                 {cat.icon && (cat.icon.startsWith('/') || cat.icon.startsWith('http')) ? (
-                  <img src={cat.icon} alt={cat.label} className="w-5 h-5 object-contain" />
+                  <Image src={cat.icon} alt={cat.label} width={20} height={20} className="w-5 h-5 object-contain" />
                 ) : (
                   cat.icon || '📦'
                 )}

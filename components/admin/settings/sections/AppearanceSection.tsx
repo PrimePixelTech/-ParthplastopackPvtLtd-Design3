@@ -50,7 +50,7 @@ export default function AppearanceSection() {
       }, 500); // 500ms debounce
       return () => clearTimeout(timer);
     }
-  }, [stringifiedAppearance, setAppearance]);
+  }, [stringifiedAppearance, setAppearance, appearanceValues]);
 
   const handleReset = () => {
     Object.keys(defaultAppearance).forEach((key) => {

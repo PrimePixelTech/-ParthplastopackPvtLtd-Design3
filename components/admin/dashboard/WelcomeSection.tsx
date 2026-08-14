@@ -39,7 +39,7 @@ export default function WelcomeSection() {
         <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-slate-900 flex items-center gap-2">
           {greeting}, {name} <span className="animate-wave inline-block origin-bottom-right">👋</span>
         </h1>
-        <p className="text-slate-500 mt-1">Here is what's happening with your store today.</p>
+        <p className="text-slate-500 mt-1">Here is what&apos;s happening with your store today.</p>
       </div>
 
       <div className="flex items-center gap-6 bg-white/60 p-4 rounded-2xl border border-slate-100/50 shadow-sm">

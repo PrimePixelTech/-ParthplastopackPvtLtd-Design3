@@ -61,7 +61,7 @@ export default function DeleteModal({
                   {description}
                   {itemName && (
                     <span className="block mt-2 font-semibold text-slate-700">
-                      Target: "{itemName}"
+                      Target: &quot;{itemName}&quot;
                     </span>
                   )}
                 </p>

@@ -16,6 +16,7 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://www.parthplastopack.com'),
   title: {
     default: 'Parth Plasto Pack Pvt. Ltd. | Premium Pharma & Nutraceutical Packaging Manufacturer',
     template: '%s | Parth Plasto Pack Pvt. Ltd.',

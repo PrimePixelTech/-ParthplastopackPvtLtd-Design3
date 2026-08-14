@@ -17,6 +17,7 @@ export default function ProductsPage() {
   const [products, setProducts] = useState<any[]>([]);
   const [categories, setCategories] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [errorMsg, setErrorMsg] = useState('');
   const [importing, setImporting] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState<any>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
@@ -83,10 +84,11 @@ export default function ProductsPage() {
         getProducts(),
         getCategories()
       ]);
-      setProducts(prodData);
-      setCategories(catData);
-    } catch (error) {
-      console.error(error);
+      setProducts(prodData || []);
+      setCategories(catData || []);
+    } catch (error: any) {
+      console.error('Fetch error:', error);
+      setErrorMsg(error?.message || 'An error occurred while fetching data');
     } finally {
       setLoading(false);
     }
@@ -196,6 +198,8 @@ export default function ProductsPage() {
                     <AdminLoader text="Loading products..." />
                   </td>
                 </tr>
+              ) : errorMsg ? (
+                <tr><td colSpan={5} className="p-4 text-center text-red-500 font-semibold">{errorMsg}</td></tr>
               ) : filteredProducts.length === 0 ? (
                 <tr><td colSpan={5} className="p-4 text-center text-slate-500">No products found.</td></tr>
               ) : (
@@ -213,7 +217,7 @@ export default function ProductsPage() {
                           title="Click to view full image"
                         >
                           {product.images && product.images.length > 0 ? (
-                            <img src={product.images[0]} alt={product.name} className="w-full h-full object-contain" />
+                            <Image src={product.images[0]} alt={product.name} width={40} height={40} className="w-full h-full object-contain" />
                           ) : (
                             <Package size={20} className="text-slate-400" />
                           )}
@@ -295,10 +299,12 @@ export default function ProductsPage() {
               >
                 <X size={24} />
               </button>
-              <img 
+              <Image 
                 src={previewImage} 
                 alt="Product Preview" 
-                className="max-w-full max-h-full object-contain rounded-xl shadow-2xl" 
+                width={800}
+                height={800}
+                className="max-w-full max-h-[80vh] object-contain rounded-xl shadow-2xl" 
               />
             </motion.div>
           </motion.div>

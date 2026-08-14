@@ -3,13 +3,21 @@ import { v2 as cloudinary } from 'cloudinary';
 
 // Configure Cloudinary with the credentials we verified earlier
 cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME || 'ydw84prm',
-  api_key: process.env.CLOUDINARY_API_KEY || '464721597952559',
-  api_secret: process.env.CLOUDINARY_API_SECRET || 'ER94OSe51XxEXKfVImvSjgfv2IU',
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
 });
+
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/authOptions';
 
 export async function POST(request: Request) {
   try {
+    const session = await getServerSession(authOptions);
+    if (!session || !session.user) {
+      return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
+    }
+    
     const data = await request.formData();
     const file: File | null = data.get('file') as unknown as File;
     

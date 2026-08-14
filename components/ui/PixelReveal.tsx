@@ -425,6 +425,7 @@ export default function PixelReveal(props: Props) {
     useEffect(() => {
         if (isStatic) return
         triggerFn()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [imageSrc])
 
     return (
