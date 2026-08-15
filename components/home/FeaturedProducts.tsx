@@ -9,40 +9,89 @@ import { staggerContainer, staggerItem, imageZoom } from '@/lib/animations';
 import { getProducts } from '@/actions/product.actions';
 import ProductCard from '@/components/products/ProductCard';
 
+const fallbackFeatured = [
+  {
+    id: '1',
+    name: 'HDPE Wide Mouth Protein Jar 1000ml',
+    slug: 'hdpe-wide-mouth-protein-jar-1000ml',
+    categoryLabel: 'Protein Containers',
+    image: '/images/products/jar1.webp',
+    badge: 'Featured',
+    material: 'HDPE (100% Virgin Food Grade)',
+    overFlowVolume: '1000 ml',
+    capFitting: '100mm Induction Seal Cap',
+  },
+  {
+    id: '2',
+    name: 'Pharmaceutical Tablet Container 250cc',
+    slug: 'pharmaceutical-tablet-container-250cc',
+    categoryLabel: 'Medicine Jars',
+    image: '/images/products/medium_j_1.webp',
+    badge: 'Trending',
+    material: 'HDPE Cleanroom Moulded',
+    overFlowVolume: '250 cc',
+    capFitting: '38mm CRC Cap',
+  },
+  {
+    id: '3',
+    name: 'Effervescent Tablet Tube with Desiccant Cap',
+    slug: 'effervescent-tablet-tube-with-desiccant-cap',
+    categoryLabel: 'Effervescent Tubes',
+    image: '/images/products/tube1.webp',
+    badge: 'Featured',
+    material: 'Polypropylene (PP)',
+    overFlowVolume: '20 Tablets (144mm)',
+    capFitting: 'Spiral Desiccant Stopper',
+  },
+  {
+    id: '4',
+    name: 'HDPE Bulk Powder Container 3000ml',
+    slug: 'hdpe-bulk-powder-container-3000ml',
+    categoryLabel: 'HDPE Containers',
+    image: '/images/products/Large_j_1.webp',
+    badge: 'Trending',
+    material: 'High-Density Polyethylene',
+    overFlowVolume: '3000 ml',
+    capFitting: '120mm Ribbed Cap',
+  },
+];
+
 export default function FeaturedProducts() {
-  const [featuredProducts, setFeaturedProducts] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [featuredProducts, setFeaturedProducts] = useState<any[]>(fallbackFeatured);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function loadData() {
       try {
         const productData = await getProducts();
-        const activeProducts = productData.filter((p: any) => p.status === 'ACTIVE');
-        
-        const mappedProducts = activeProducts.map((p: any) => ({
-          id: p._id,
-          name: p.name,
-          slug: p.slug,
-          categoryLabel: p.category?.title || 'Other',
-          image: p.images?.[0] || '/images/products/placeholder.webp',
-          badge: p.isFeatured ? 'Featured' : p.isTrending ? 'Trending' : '',
-          material: p.specifications?.material || 'N/A',
-          overFlowVolume: p.specifications?.overFlowVolume || 'N/A',
-          capFitting: p.specifications?.capFitting || 'N/A',
-        }));
+        if (Array.isArray(productData) && productData.length > 0) {
+          const activeProducts = productData.filter((p: any) => p.status === 'ACTIVE');
+          
+          const mappedProducts = activeProducts.map((p: any) => ({
+            id: p._id,
+            name: p.name,
+            slug: p.slug,
+            categoryLabel: p.category?.title || 'Other',
+            image: p.images?.[0] || '/images/products/placeholder.webp',
+            badge: p.isFeatured ? 'Featured' : p.isTrending ? 'Trending' : '',
+            material: p.specifications?.material || 'N/A',
+            overFlowVolume: p.specifications?.overFlowVolume || 'N/A',
+            capFitting: p.specifications?.capFitting || 'N/A',
+          }));
 
-        let featured = mappedProducts.filter(p => p.badge);
-        if (featured.length === 0) {
-          featured = mappedProducts.slice(0, 4);
-        } else {
-          featured = featured.slice(0, 4);
+          let featured = mappedProducts.filter(p => p.badge);
+          if (featured.length === 0) {
+            featured = mappedProducts.slice(0, 4);
+          } else {
+            featured = featured.slice(0, 4);
+          }
+
+          if (featured.length > 0) {
+            setFeaturedProducts(featured);
+          }
         }
-
-        setFeaturedProducts(featured);
       } catch (error) {
         console.error(error);
-      } finally {
-        setLoading(false);
       }
     }
     loadData();

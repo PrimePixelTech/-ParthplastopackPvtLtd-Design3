@@ -17,11 +17,13 @@ async function checkAdmin() {
 export async function getCategories() {
   noStore();
   try {
-    await connectDB();
+    const db = await connectDB();
+    if (!db) return [];
     const categories = await Category.find().sort({ sortOrder: 1, createdAt: -1 }).lean();
     return JSON.parse(JSON.stringify(categories));
   } catch (error: any) {
-    throw new Error(error.message);
+    console.error('getCategories error:', error.message);
+    return [];
   }
 }
 

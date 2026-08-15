@@ -17,11 +17,13 @@ async function checkAdmin() {
 
 export async function getProducts() {
   try {
-    await connectDB();
+    const db = await connectDB();
+    if (!db) return [];
     const products = await Product.find().populate({ path: 'category', model: Category, select: 'title' }).sort({ createdAt: -1 }).lean();
     return JSON.parse(JSON.stringify(products));
   } catch (error: any) {
-    throw new Error(error.message);
+    console.error('getProducts error:', error.message);
+    return [];
   }
 }
 

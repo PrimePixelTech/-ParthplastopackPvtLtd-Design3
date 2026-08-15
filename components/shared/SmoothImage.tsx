@@ -6,27 +6,39 @@ import { cn } from '@/lib/utils';
 
 interface SmoothImageProps extends ImageProps {
   wrapperClassName?: string;
+  fallbackSrc?: string;
 }
 
-export default function SmoothImage({ src, alt, className, wrapperClassName, ...props }: SmoothImageProps) {
+export default function SmoothImage({
+  src,
+  alt,
+  className,
+  wrapperClassName,
+  fallbackSrc = '/images/products/jar1.webp',
+  unoptimized = true,
+  ...props
+}: SmoothImageProps) {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [imgSrc, setImgSrc] = useState(src);
 
   return (
-    <div className={cn("relative flex items-center justify-center", wrapperClassName)}>
-      {/* Shimmer Effect while loading */}
-      {!isLoaded && (
-        <div className="absolute inset-0 bg-gray-200/40 animate-pulse rounded-inherit z-0" />
-      )}
-      
+    <div className={cn('relative flex items-center justify-center', wrapperClassName)}>
       <Image
-        src={src}
-        alt={alt}
+        src={imgSrc || fallbackSrc}
+        alt={alt || 'Product Image'}
+        unoptimized={unoptimized}
         className={cn(
           className,
-          "transition-all duration-700 ease-out z-10",
-          isLoaded ? "blur-0" : "blur-sm" // Removed opacity-0 to guarantee image visibility
+          'transition-opacity duration-300 ease-out',
+          isLoaded ? 'opacity-100' : 'opacity-90'
         )}
         onLoad={() => setIsLoaded(true)}
+        onError={() => {
+          if (fallbackSrc && imgSrc !== fallbackSrc) {
+            setImgSrc(fallbackSrc);
+          }
+          setIsLoaded(true);
+        }}
         {...props}
       />
     </div>

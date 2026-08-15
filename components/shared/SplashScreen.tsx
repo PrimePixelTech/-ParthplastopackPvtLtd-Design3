@@ -21,9 +21,9 @@ export default function SplashScreen() {
     
     sessionStorage.setItem('hasSeenSplash', 'true');
 
-    // Progress counter animation (speeded up for better UX)
-    const duration = 800;
-    const interval = 20;
+    // Progress counter animation (snappy and lightweight for fast loading)
+    const duration = 300;
+    const interval = 15;
     const steps = duration / interval;
     let currentStep = 0;
 
@@ -34,7 +34,7 @@ export default function SplashScreen() {
 
       if (currentStep >= steps) {
         clearInterval(timer);
-        setTimeout(() => setIsVisible(false), 200); // Hide shortly after reaching 100%
+        setTimeout(() => setIsVisible(false), 100); // Hide shortly after reaching 100%
       }
     }, interval);
 

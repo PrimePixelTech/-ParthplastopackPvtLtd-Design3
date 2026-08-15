@@ -47,14 +47,15 @@ export default function ProductCategories() {
                   className="group relative rounded-2xl overflow-hidden bg-white border border-gray-100 shadow-card hover:shadow-card-hover transition-all duration-500 cursor-pointer h-full"
                 >
                   {/* Image */}
-                  <div className="relative h-52 md:h-56 overflow-hidden bg-gradient-to-br from-gray-50 to-white flex items-center justify-center p-6">
-                    <motion.div variants={imageZoom}>
+                  <div className="relative h-48 sm:h-52 md:h-56 overflow-hidden bg-gradient-to-br from-gray-50 to-white flex items-center justify-center p-4 sm:p-6">
+                    <motion.div variants={imageZoom} className="w-full h-full flex items-center justify-center">
                       <SmoothImage
                         src={category.image}
                         alt={category.title}
                         width={200}
                         height={200}
-                        className="object-contain max-h-40 drop-shadow-md"
+                        priority={i < 4}
+                        className="object-contain max-h-36 sm:max-h-40 drop-shadow-md"
                       />
                     </motion.div>
 
