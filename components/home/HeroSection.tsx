@@ -75,7 +75,7 @@ export default function HeroSection() {
             alt={product.alt}
             width={130}
             height={130}
-            className="object-contain drop-shadow-xl opacity-80"
+            className="object-contain opacity-80"
           />
         </motion.div>
       ))}

@@ -83,7 +83,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Produc
                 }}
                 className="flex items-center justify-center w-full h-full"
               >
-                <div className="w-full h-full drop-shadow-[0_20px_30px_rgba(0,0,0,0.15)] group-hover:scale-105 transition-transform duration-700">
+                <div className="w-full h-full group-hover:scale-105 transition-transform duration-700">
                   <PixelReveal
                     imageSrc={images[selectedImage]}
                     transitionColor="#F9FAFB"

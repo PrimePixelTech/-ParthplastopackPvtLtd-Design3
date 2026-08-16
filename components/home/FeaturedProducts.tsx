@@ -8,6 +8,7 @@ import { ArrowRight } from 'lucide-react';
 import { staggerContainer, staggerItem, imageZoom } from '@/lib/animations';
 import { getProducts } from '@/actions/product.actions';
 import ProductCard from '@/components/products/ProductCard';
+import { normalizeImageUrl } from '@/lib/image-url';
 
 const fallbackFeatured = [
   {
@@ -72,7 +73,7 @@ export default function FeaturedProducts() {
             name: p.name,
             slug: p.slug,
             categoryLabel: p.category?.title || 'Other',
-            image: p.images?.[0] || '/images/products/placeholder.webp',
+            image: normalizeImageUrl(p.images?.[0]),
             badge: p.isFeatured ? 'Featured' : p.isTrending ? 'Trending' : '',
             material: p.specifications?.material || 'N/A',
             overFlowVolume: p.specifications?.overFlowVolume || 'N/A',

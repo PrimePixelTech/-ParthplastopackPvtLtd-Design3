@@ -5,6 +5,7 @@
 
 import * as React from "react"
 import { useEffect, useLayoutEffect, useRef } from "react"
+import { normalizeImageUrl, DEFAULT_FALLBACK_IMAGE } from "@/lib/image-url"
 const useIsStaticRenderer = () => false
 
 /**
@@ -440,10 +441,10 @@ export default function PixelReveal(props: Props) {
     }, [imageSrc])
 
     const [imgLoadError, setImgLoadError] = React.useState(false)
-    const [currentSrc, setCurrentSrc] = React.useState(imageSrc)
+    const [currentSrc, setCurrentSrc] = React.useState(() => normalizeImageUrl(imageSrc, DEFAULT_FALLBACK_IMAGE))
 
     React.useEffect(() => {
-        setCurrentSrc(imageSrc)
+        setCurrentSrc(normalizeImageUrl(imageSrc, DEFAULT_FALLBACK_IMAGE))
         setImgLoadError(false)
     }, [imageSrc])
 
@@ -465,8 +466,8 @@ export default function PixelReveal(props: Props) {
                     alt=""
                     draggable={false}
                     onError={() => {
-                        if (currentSrc !== '/images/products/jar1.webp') {
-                            setCurrentSrc('/images/products/jar1.webp')
+                        if (currentSrc !== DEFAULT_FALLBACK_IMAGE) {
+                            setCurrentSrc(DEFAULT_FALLBACK_IMAGE)
                         } else {
                             setImgLoadError(true)
                             stopRaf()

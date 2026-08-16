@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { useRef } from 'react';
+import { normalizeImageUrl } from '@/lib/image-url';
 
 interface CategoryShowcaseProps {
   categories: any[];
@@ -112,7 +113,7 @@ export default function CategoryShowcase({ categories, activeCategory, onCategor
                       className="relative w-full h-full p-2 md:p-3"
                     >
                       <Image
-                        src={category.icon}
+                        src={normalizeImageUrl(category.icon)}
                         alt={category.label}
                         fill
                         unoptimized

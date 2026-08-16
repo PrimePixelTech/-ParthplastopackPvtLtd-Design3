@@ -4,8 +4,10 @@ import { useState, useEffect } from 'react';
 import Image, { ImageProps } from 'next/image';
 import { cn } from '@/lib/utils';
 import { Package } from 'lucide-react';
+import { normalizeImageUrl, DEFAULT_FALLBACK_IMAGE } from '@/lib/image-url';
 
-interface SmoothImageProps extends ImageProps {
+interface SmoothImageProps extends Omit<ImageProps, 'src'> {
+  src: string | any;
   wrapperClassName?: string;
   fallbackSrc?: string;
 }
@@ -15,23 +17,24 @@ export default function SmoothImage({
   alt,
   className,
   wrapperClassName,
-  fallbackSrc = '/images/products/jar1.webp',
-  unoptimized = true,
+  fallbackSrc = DEFAULT_FALLBACK_IMAGE,
+  unoptimized,
   ...props
 }: SmoothImageProps) {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [imgSrc, setImgSrc] = useState(src);
+  const normalizedInitial = typeof src === 'string' ? normalizeImageUrl(src, fallbackSrc) : src;
+  const [imgSrc, setImgSrc] = useState<any>(normalizedInitial || fallbackSrc);
   const [hasError, setHasError] = useState(false);
   const [usedFallback, setUsedFallback] = useState(false);
 
   useEffect(() => {
-    setImgSrc(src);
+    const nextNormalized = typeof src === 'string' ? normalizeImageUrl(src, fallbackSrc) : src;
+    setImgSrc(nextNormalized || fallbackSrc);
     setHasError(false);
     setUsedFallback(false);
     setIsLoaded(false);
-  }, [src]);
+  }, [src, fallbackSrc]);
 
-  // If no source at all, try fallback or show placeholder
   const activeSrc = imgSrc || fallbackSrc;
 
   if (hasError || !activeSrc) {
@@ -53,12 +56,14 @@ export default function SmoothImage({
         unoptimized={unoptimized}
         className={cn(
           className,
-          'transition-opacity duration-300 ease-out',
-          isLoaded ? 'opacity-100' : 'opacity-80'
+          'transition-opacity duration-200 ease-out opacity-100'
         )}
         onLoad={() => setIsLoaded(true)}
         onError={() => {
-          if (!usedFallback && fallbackSrc && imgSrc !== fallbackSrc) {
+          if (process.env.NODE_ENV === 'development') {
+            console.warn(`[SmoothImage] Failed to load image: ${activeSrc}. Falling back to: ${fallbackSrc}`);
+          }
+          if (!usedFallback && fallbackSrc && activeSrc !== fallbackSrc) {
             setUsedFallback(true);
             setImgSrc(fallbackSrc);
           } else {

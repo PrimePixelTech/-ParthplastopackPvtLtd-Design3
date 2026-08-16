@@ -8,6 +8,7 @@ import { ArrowRight } from 'lucide-react';
 import SectionHeading from '@/components/shared/SectionHeading';
 import { staggerContainer, staggerItem, imageZoom, arrowSlide } from '@/lib/animations';
 import { getCategories } from '@/actions/category.actions';
+import { normalizeImageUrl } from '@/lib/image-url';
 
 const defaultCategoryCards = [
   { title: 'Protein Powder Containers', image: '/images/products/jar1.webp', count: '15+ Variants', href: '/products?category=protein-containers' },
@@ -33,7 +34,7 @@ export default function ProductCategories() {
           if (active.length > 0) {
             const mapped = active.map((c: any) => ({
               title: c.title,
-              image: c.image || '/images/products/jar1.webp',
+              image: normalizeImageUrl(c.image),
               count: 'Available',
               href: `/products?category=${c.slug || c._id}`,
             }));
@@ -83,7 +84,7 @@ export default function ProductCategories() {
                         height={200}
                         priority={i < 4}
                         unoptimized
-                        className="object-contain max-h-36 sm:max-h-40 drop-shadow-md"
+                        className="object-contain max-h-36 sm:max-h-40"
                       />
                     </motion.div>
 

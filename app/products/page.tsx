@@ -6,6 +6,7 @@ import WhatsAppFloat from '@/components/shared/WhatsAppFloat';
 import ProductsCatalogClient from '@/components/products/ProductsCatalogClient';
 import { getProducts } from '@/actions/product.actions';
 import { getCategories } from '@/actions/category.actions';
+import { normalizeImageUrl } from '@/lib/image-url';
 
 export const metadata: Metadata = {
   title: 'Our Products | Parth Plasto Pack Pvt. Ltd.',
@@ -40,7 +41,7 @@ export default async function ProductsPage() {
     .map((c: any) => ({
       id: c._id.toString(),
       label: c.title,
-      icon: c.image || '📁'
+      icon: normalizeImageUrl(c.image, '📁')
     }));
     
   const dbCategories = [{ id: 'all', label: 'All Products', icon: '📦' }, ...mappedCats];
@@ -57,7 +58,7 @@ export default async function ProductsPage() {
       slug: p.slug,
       categoryId: catId,
       categoryLabel: catLabel,
-      image: p.images?.[0] || '/images/products/placeholder.webp',
+      image: normalizeImageUrl(p.images?.[0]),
       badge: p.isFeatured ? 'Featured' : p.isTrending ? 'Trending' : '',
       material: p.specifications?.material || 'N/A',
       overFlowVolume: p.specifications?.overFlowVolume || 'N/A',

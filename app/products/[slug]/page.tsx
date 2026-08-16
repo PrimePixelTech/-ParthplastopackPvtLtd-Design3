@@ -7,6 +7,7 @@ import BackToTop from '@/components/shared/BackToTop';
 import WhatsAppFloat from '@/components/shared/WhatsAppFloat';
 import ProductDetailClient from '@/components/products/ProductDetailClient';
 import { getProductBySlug, getProducts } from '@/actions/product.actions';
+import { normalizeImageUrl } from '@/lib/image-url';
 
 interface Props {
   params: { slug: string };
@@ -77,14 +78,19 @@ export default async function ProductDetailPage({ params }: Props) {
   }
 
   // Map DB schema to frontend schema
+  const primaryImage = normalizeImageUrl(dbProduct.images?.[0]);
+  const galleryImages = Array.isArray(dbProduct.images) && dbProduct.images.length > 0
+    ? dbProduct.images.map((img: string) => normalizeImageUrl(img))
+    : [primaryImage];
+
   const mappedProduct = {
     id: dbProduct._id.toString(),
     name: dbProduct.name,
     slug: dbProduct.slug,
     categoryId: dbProduct.category?._id?.toString() || 'other',
     categoryLabel: dbProduct.category?.title || 'Other',
-    image: dbProduct.images?.[0] || '/images/products/placeholder.webp',
-    gallery: dbProduct.images?.length ? dbProduct.images : ['/images/products/placeholder.webp'],
+    image: primaryImage,
+    gallery: galleryImages,
     badge: dbProduct.isFeatured ? 'Featured' : dbProduct.isTrending ? 'Trending' : '',
     description: dbProduct.description || dbProduct.shortDescription || 'No description available.',
     overFlowVolume: dbProduct.specifications?.overFlowVolume || '',
@@ -113,7 +119,7 @@ export default async function ProductDetailPage({ params }: Props) {
       slug: p.slug,
       categoryId: p.category?._id?.toString() || 'other',
       categoryLabel: p.category?.title || 'Other',
-      image: p.images?.[0] || '/images/products/placeholder.webp',
+      image: normalizeImageUrl(p.images?.[0]),
       badge: p.isFeatured ? 'Featured' : p.isTrending ? 'Trending' : '',
       material: p.specifications?.material || 'N/A',
       overFlowVolume: p.specifications?.overFlowVolume || 'N/A',
