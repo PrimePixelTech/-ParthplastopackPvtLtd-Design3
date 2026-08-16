@@ -38,7 +38,10 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
       onMouseMove={handleMouseMove}
       className="group cursor-pointer h-full"
     >
-      <div className="relative h-full flex flex-col rounded-2xl overflow-hidden bg-white/70 backdrop-blur-lg border border-white/60 shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-[0_15px_40px_rgba(79,70,229,0.1)] transition-all duration-500">
+      <div 
+        className="relative h-full flex flex-col rounded-2xl overflow-hidden bg-white/70 backdrop-blur-lg border border-white/60 shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-[0_15px_40px_rgba(79,70,229,0.1)] transition-all duration-500"
+        style={{ transform: 'translateZ(0)', WebkitTransform: 'translateZ(0)' }}
+      >
         
         {/* Holographic Cursor Glare */}
         <motion.div
@@ -60,6 +63,10 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
               alt={product.name}
               width={240}
               height={240}
+<<<<<<< HEAD
+=======
+              unoptimized
+>>>>>>> 8b6196c (Fix iOS Safari product image visibility bugs)
               className="object-contain w-full h-full max-h-[140px] md:max-h-[180px] transition-transform duration-700 group-hover:scale-105 group-hover:-translate-y-2"
             />
           </motion.div>
