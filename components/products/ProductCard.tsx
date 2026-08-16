@@ -63,10 +63,7 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
               alt={product.name}
               width={240}
               height={240}
-<<<<<<< HEAD
-=======
               unoptimized
->>>>>>> 8b6196c (Fix iOS Safari product image visibility bugs)
               className="object-contain w-full h-full max-h-[140px] md:max-h-[180px] transition-transform duration-700 group-hover:scale-105 group-hover:-translate-y-2"
             />
           </motion.div>

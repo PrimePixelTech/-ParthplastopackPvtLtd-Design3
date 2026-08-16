@@ -7,20 +7,18 @@ import { Variants } from 'framer-motion';
 
 // ---- Fade Variants ----
 export const fadeIn: Variants = {
-  hidden: { opacity: 0, filter: 'blur(10px)' },
+  hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    filter: 'blur(0px)',
     transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
   },
 };
 
 export const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 60, filter: 'blur(8px)' },
+  hidden: { opacity: 0, y: 60 },
   visible: {
     opacity: 1,
     y: 0,
-    filter: 'blur(0px)',
     transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1] },
   },
 };
@@ -36,21 +34,19 @@ export const fadeDown: Variants = {
 
 // ---- Slide Variants ----
 export const slideLeft: Variants = {
-  hidden: { opacity: 0, x: -80, filter: 'blur(8px)' },
+  hidden: { opacity: 0, x: -80 },
   visible: {
     opacity: 1,
     x: 0,
-    filter: 'blur(0px)',
     transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1] },
   },
 };
 
 export const slideRight: Variants = {
-  hidden: { opacity: 0, x: 80, filter: 'blur(8px)' },
+  hidden: { opacity: 0, x: 80 },
   visible: {
     opacity: 1,
     x: 0,
-    filter: 'blur(0px)',
     transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1] },
   },
 };
@@ -98,11 +94,10 @@ export const staggerContainerSlow: Variants = {
 };
 
 export const staggerItem: Variants = {
-  hidden: { opacity: 0, y: 40, filter: 'blur(5px)' },
+  hidden: { opacity: 0, y: 40 },
   visible: {
     opacity: 1,
     y: 0,
-    filter: 'blur(0px)',
     transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] },
   },
 };
