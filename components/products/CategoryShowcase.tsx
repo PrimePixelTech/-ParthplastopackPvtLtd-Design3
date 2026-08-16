@@ -115,6 +115,7 @@ export default function CategoryShowcase({ categories, activeCategory, onCategor
                         src={category.icon}
                         alt={category.label}
                         fill
+                        unoptimized
                         className="object-contain transition-transform duration-500 group-hover:scale-110 p-1 md:p-2"
                       />
                     </motion.div>

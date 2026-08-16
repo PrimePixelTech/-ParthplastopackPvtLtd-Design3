@@ -398,11 +398,19 @@ export default function PixelReveal(props: Props) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [transitionColor])
 
-    // Auto-trigger: play the reveal once when the component scrolls into view.
+    // Auto-trigger: play the reveal once when the component scrolls into view or on mount fallback
     useEffect(() => {
         if (isStatic) return
         const container = containerRef.current
         if (!container) return
+
+        // Safety fallback timer for mobile / fast renders
+        const safetyTimer = setTimeout(() => {
+            if (!triggeredOnceRef.current) {
+                triggeredOnceRef.current = true
+                triggerFn()
+            }
+        }, 400)
 
         const io = new IntersectionObserver(
             (entries) => {
@@ -417,7 +425,10 @@ export default function PixelReveal(props: Props) {
             { threshold: 0 }
         )
         io.observe(container)
-        return () => io.disconnect()
+        return () => {
+            clearTimeout(safetyTimer)
+            io.disconnect()
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isStatic])
 
@@ -426,6 +437,14 @@ export default function PixelReveal(props: Props) {
         if (isStatic) return
         triggerFn()
         // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [imageSrc])
+
+    const [imgLoadError, setImgLoadError] = React.useState(false)
+    const [currentSrc, setCurrentSrc] = React.useState(imageSrc)
+
+    React.useEffect(() => {
+        setCurrentSrc(imageSrc)
+        setImgLoadError(false)
     }, [imageSrc])
 
     return (
@@ -439,24 +458,41 @@ export default function PixelReveal(props: Props) {
                 ...style,
             }}
         >
-            {imageSrc ? (
+            {currentSrc && !imgLoadError ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
-                    src={imageSrc}
+                    src={currentSrc}
                     alt=""
                     draggable={false}
+                    onError={() => {
+                        if (currentSrc !== '/images/products/jar1.webp') {
+                            setCurrentSrc('/images/products/jar1.webp')
+                        } else {
+                            setImgLoadError(true)
+                            stopRaf()
+                            const ctx = ctxRef.current
+                            if (ctx && gridRef.current) {
+                                ctx.clearRect(0, 0, gridRef.current.cssW, gridRef.current.cssH)
+                            }
+                        }
+                    }}
                     style={{
                         position: "absolute",
                         inset: 0,
                         width: "100%",
                         height: "100%",
-                        objectFit: "contain", // Modified from "cover" to "contain"
+                        objectFit: "contain",
                         display: "block",
                         userSelect: "none",
                         pointerEvents: "none",
                     }}
                 />
-            ) : null}
+            ) : (
+                <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-50 text-gray-400 p-4 rounded-2xl">
+                    <span className="text-4xl mb-2">📦</span>
+                    <span className="text-xs text-gray-400 font-medium">Product Image</span>
+                </div>
+            )}
             <canvas
                 ref={canvasRef}
                 style={{

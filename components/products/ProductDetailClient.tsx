@@ -124,7 +124,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Produc
                       : 'border-gray-100 hover:border-gray-300'
                   }`}
                 >
-                  <Image src={img} alt="" width={60} height={60} className="object-contain" />
+                  <Image src={img} alt="" width={60} height={60} unoptimized className="object-contain w-full h-full" />
                 </button>
               ))}
             </div>

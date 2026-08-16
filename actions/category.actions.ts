@@ -49,6 +49,8 @@ export async function createCategory(data: any) {
 
     const category = await Category.create(data);
     revalidatePath('/admin/categories');
+    revalidatePath('/products');
+    revalidatePath('/');
     return { success: true, data: JSON.parse(JSON.stringify(category)) };
   } catch (error: any) {
     return { success: false, error: error.message };
@@ -63,6 +65,8 @@ export async function updateCategory(id: string, data: any) {
     const category = await Category.findByIdAndUpdate(id, data, { new: true });
     revalidatePath('/admin/categories');
     revalidatePath(`/admin/categories/${id}`);
+    revalidatePath('/products');
+    revalidatePath('/');
     
     return { success: true, data: JSON.parse(JSON.stringify(category)) };
   } catch (error: any) {
@@ -77,6 +81,8 @@ export async function deleteCategory(id: string) {
     
     await Category.findByIdAndDelete(id);
     revalidatePath('/admin/categories');
+    revalidatePath('/products');
+    revalidatePath('/');
     return { success: true };
   } catch (error: any) {
     return { success: false, error: error.message };

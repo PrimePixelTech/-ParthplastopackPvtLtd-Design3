@@ -8,6 +8,8 @@ import { staggerContainer, staggerItem } from '@/lib/animations';
 import { getCategories, deleteCategory } from '@/actions/category.actions';
 import DeleteModal from '@/components/admin/DeleteModal';
 import AdminLoader from '@/components/admin/AdminLoader';
+import Image from 'next/image';
+import { Folder } from 'lucide-react';
 
 export default function CategoriesPage() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -104,11 +106,27 @@ export default function CategoriesPage() {
                   >
                     <td className="p-4">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center shrink-0 cursor-move hover:bg-slate-200:bg-slate-700 transition-colors" title="Drag to reorder">
-                          <ArrowUpDown size={16} className="text-slate-400" />
+                        <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center shrink-0 overflow-hidden border border-gray-200">
+                          {category.image ? (
+                            <Image
+                              src={category.image}
+                              alt={category.title}
+                              width={40}
+                              height={40}
+                              unoptimized
+                              className="w-full h-full object-contain p-1"
+                            />
+                          ) : (
+                            <Folder size={18} className="text-slate-400" />
+                          )}
                         </div>
-                        <div className="font-semibold text-slate-900 group-hover:text-primary transition-colors">
-                          {category.title}
+                        <div>
+                          <div className="font-semibold text-slate-900 group-hover:text-primary transition-colors">
+                            {category.title}
+                          </div>
+                          {category.description && (
+                            <p className="text-xs text-slate-400 line-clamp-1 max-w-xs">{category.description}</p>
+                          )}
                         </div>
                       </div>
                     </td>

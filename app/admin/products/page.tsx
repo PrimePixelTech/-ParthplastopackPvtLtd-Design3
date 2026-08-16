@@ -217,7 +217,7 @@ export default function ProductsPage() {
                           title="Click to view full image"
                         >
                           {product.images && product.images.length > 0 ? (
-                            <Image src={product.images[0]} alt={product.name} width={40} height={40} className="w-full h-full object-contain" />
+                            <Image src={product.images[0]} alt={product.name} width={40} height={40} unoptimized className="w-full h-full object-contain" />
                           ) : (
                             <Package size={20} className="text-slate-400" />
                           )}
@@ -304,6 +304,7 @@ export default function ProductsPage() {
                 alt="Product Preview" 
                 width={800}
                 height={800}
+                unoptimized
                 className="max-w-full max-h-[80vh] object-contain rounded-xl shadow-2xl" 
               />
             </motion.div>

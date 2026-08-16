@@ -1,13 +1,15 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import SmoothImage from '@/components/shared/SmoothImage';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import SectionHeading from '@/components/shared/SectionHeading';
 import { staggerContainer, staggerItem, imageZoom, arrowSlide } from '@/lib/animations';
+import { getCategories } from '@/actions/category.actions';
 
-const categoryCards = [
+const defaultCategoryCards = [
   { title: 'Protein Powder Containers', image: '/images/products/jar1.webp', count: '15+ Variants', href: '/products?category=protein-containers' },
   { title: 'HDPE Containers', image: '/images/products/Large_j_1.webp', count: '20+ Variants', href: '/products?category=hdpe-containers' },
   { title: 'Medicine Jars', image: '/images/products/medium_j_1.webp', count: '12+ Variants', href: '/products?category=medicine-jars' },
@@ -20,6 +22,31 @@ const categoryCards = [
 ];
 
 export default function ProductCategories() {
+  const [categories, setCategories] = useState<any[]>(defaultCategoryCards);
+
+  useEffect(() => {
+    async function loadCategories() {
+      try {
+        const data = await getCategories();
+        if (Array.isArray(data) && data.length > 0) {
+          const active = data.filter((c: any) => c.isActive !== false);
+          if (active.length > 0) {
+            const mapped = active.map((c: any) => ({
+              title: c.title,
+              image: c.image || '/images/products/jar1.webp',
+              count: 'Available',
+              href: `/products?category=${c.slug || c._id}`,
+            }));
+            setCategories(mapped);
+          }
+        }
+      } catch (err) {
+        console.error('Failed to load categories for homepage:', err);
+      }
+    }
+    loadCategories();
+  }, []);
+
   return (
     <section className="section-padding bg-light relative overflow-hidden">
       <div className="absolute -bottom-20 -left-20 w-[400px] h-[400px] bg-secondary/[0.03] rounded-full blur-[80px] pointer-events-none" />
@@ -38,8 +65,8 @@ export default function ProductCategories() {
           variants={staggerContainer}
           className="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 min-[1920px]:grid-cols-5 gap-3 md:gap-6"
         >
-          {categoryCards.map((category, i) => (
-            <motion.div key={category.title} variants={staggerItem}>
+          {categories.map((category, i) => (
+            <motion.div key={category.title + i} variants={staggerItem}>
               <Link href={category.href}>
                 <motion.div
                   whileHover="hover"
@@ -55,6 +82,7 @@ export default function ProductCategories() {
                         width={200}
                         height={200}
                         priority={i < 4}
+                        unoptimized
                         className="object-contain max-h-36 sm:max-h-40 drop-shadow-md"
                       />
                     </motion.div>
