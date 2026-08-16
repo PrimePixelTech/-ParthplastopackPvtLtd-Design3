@@ -2,7 +2,7 @@
 
 import connectDB from '@/lib/db';
 import Inquiry from '@/models/Inquiry';
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, unstable_cache } from 'next/cache';
 
 // Public action: anyone can submit an inquiry
 export async function createInquiry(data: any) {
@@ -21,16 +21,20 @@ export async function createInquiry(data: any) {
 }
 
 // Protected actions: Admin only
-export async function getInquiries() {
-  try {
-    await connectDB();
-    const inquiries = await Inquiry.find().sort({ createdAt: -1 }).lean();
-    return { success: true, data: JSON.parse(JSON.stringify(inquiries)) };
-  } catch (error: any) {
-    console.error('Failed to fetch inquiries:', error);
-    return { success: false, error: error.message };
-  }
-}
+export const getInquiries = unstable_cache(
+  async () => {
+    try {
+      await connectDB();
+      const inquiries = await Inquiry.find().sort({ createdAt: -1 }).lean();
+      return { success: true, data: JSON.parse(JSON.stringify(inquiries)) };
+    } catch (error: any) {
+      console.error('Failed to fetch inquiries:', error);
+      return { success: false, error: error.message };
+    }
+  },
+  ['all-inquiries'],
+  { revalidate: 3600, tags: ['inquiries'] }
+);
 
 export async function updateInquiry(id: string, updateData: any) {
   try {

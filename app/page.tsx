@@ -17,6 +17,7 @@ const ContactSection = dynamic(() => import('@/components/home/ContactSection'))
 const CTASection = dynamic(() => import('@/components/home/CTASection'));
 const BackToTop = dynamic(() => import('@/components/shared/BackToTop'), { ssr: false });
 const WhatsAppFloat = dynamic(() => import('@/components/shared/WhatsAppFloat'), { ssr: false });
+const ExpoAdModal = dynamic(() => import('@/components/shared/ExpoAdModal'), { ssr: false });
 
 export default function HomePage() {
   return (
@@ -39,6 +40,7 @@ export default function HomePage() {
       <Footer />
       <BackToTop />
       <WhatsAppFloat />
+      <ExpoAdModal />
     </>
   );
 }

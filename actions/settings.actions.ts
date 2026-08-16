@@ -10,16 +10,13 @@ import { encrypt, decrypt } from '@/lib/encryption';
 import { SettingsFormValues } from '@/lib/validations/settings.schema';
 
 export async function getAllSettings(): Promise<{ success: boolean; data?: SettingsFormValues; error?: string }> {
-  noStore();
   try {
     await dbConnect();
     
-    const [general, appearance, security, notifications] = await Promise.all([
-      GeneralSettings.findOne() || GeneralSettings.create({}),
-      AppearanceSettings.findOne() || AppearanceSettings.create({}),
-      SecuritySettings.findOne() || SecuritySettings.create({}),
-      NotificationConfig.findOne() || NotificationConfig.create({})
-    ]);
+    const general = await GeneralSettings.findOne().lean() || await GeneralSettings.create({});
+    const appearance = await AppearanceSettings.findOne().lean() || await AppearanceSettings.create({});
+    const security = await SecuritySettings.findOne().lean() || await SecuritySettings.create({});
+    const notifications = await NotificationConfig.findOne().lean() || await NotificationConfig.create({});
 
     // Construct the data object exactly as Zod expects
     const data: SettingsFormValues = {

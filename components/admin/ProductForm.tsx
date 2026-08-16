@@ -23,7 +23,7 @@ export default function ProductForm({ initialData }: { initialData?: any }) {
     category: initialData?.category?._id || initialData?.category || '',
     shortDescription: initialData?.shortDescription || '',
     description: initialData?.description || '',
-    status: initialData?.status || 'DRAFT',
+    status: initialData?.status || 'ACTIVE',
     price: initialData?.price || 0,
     moq: initialData?.moq || 1000,
     images: initialData?.images || [],
