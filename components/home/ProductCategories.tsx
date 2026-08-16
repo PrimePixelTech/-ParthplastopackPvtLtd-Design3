@@ -30,6 +30,16 @@ export default function ProductCategories() {
       try {
         const data = await getCategories();
         if (Array.isArray(data) && data.length > 0) {
+          // Debug: log what URLs are coming from MongoDB
+          console.log(
+            'CATEGORY IMAGE DEBUG:',
+            data.map((c: any) => ({
+              title: c.title,
+              original: c.image,
+              normalized: normalizeImageUrl(c.image),
+            }))
+          );
+
           const active = data.filter((c: any) => c.isActive !== false);
           if (active.length > 0) {
             const mapped = active.map((c: any) => ({
@@ -84,7 +94,7 @@ export default function ProductCategories() {
                         height={200}
                         priority={i < 4}
                         unoptimized
-                        className="object-contain max-h-36 sm:max-h-40"
+                        className="object-contain w-auto h-auto max-w-full max-h-36 sm:max-h-40"
                       />
                     </motion.div>
 
