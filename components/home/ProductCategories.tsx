@@ -69,37 +69,29 @@ export default function ProductCategories() {
           subtitle="Explore our comprehensive range of pharmaceutical and nutraceutical packaging products designed for safety, compliance, and performance."
         />
 
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '50px' }}
-          variants={staggerContainer}
-          className="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 min-[1920px]:grid-cols-5 gap-3 md:gap-6"
-        >
+        <div className="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 min-[1920px]:grid-cols-5 gap-3 md:gap-6">
           {categories.map((category, i) => (
-            <motion.div key={category.title + i} variants={staggerItem}>
+            <div key={category.title + i}>
               <Link href={category.href}>
-                <motion.div
-                  whileHover="hover"
-                  initial="rest"
+                <div
                   className="group relative rounded-2xl overflow-hidden bg-white border border-gray-100 shadow-card hover:shadow-card-hover transition-all duration-500 cursor-pointer h-full"
                   style={{ WebkitTransform: 'translateZ(0)', transform: 'translateZ(0)' }}
                 >
-                  {/* Image */}
+                  {/* Image Area */}
                   <div
-                    className="relative h-48 sm:h-52 md:h-56 overflow-hidden bg-gradient-to-br from-gray-50 to-white flex items-center justify-center p-4 sm:p-6"
+                    className="relative h-44 sm:h-48 md:h-52 w-full overflow-hidden bg-gradient-to-br from-gray-50 to-white flex items-center justify-center p-3 sm:p-5"
                     style={{ WebkitTransform: 'translateZ(0)', transform: 'translateZ(0)', isolation: 'isolate' }}
                   >
-                    <motion.div variants={imageZoom} className="w-full h-full flex items-center justify-center">
+                    <div className="w-full h-full flex items-center justify-center relative">
                       <SmoothImage
                         src={category.image}
                         alt={category.title}
                         width={200}
                         height={200}
                         priority={true}
-                        className="object-contain max-w-full max-h-36 sm:max-h-40 w-auto h-auto"
+                        className="object-contain max-w-full max-h-36 sm:max-h-40 w-auto h-auto transition-transform duration-500 group-hover:scale-105"
                       />
-                    </motion.div>
+                    </div>
 
                     {/* Gradient overlay on hover */}
                     <div className="absolute inset-0 bg-gradient-to-t from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -115,21 +107,19 @@ export default function ProductCategories() {
                     <h3 className="text-sm md:text-base font-semibold text-dark group-hover:text-primary transition-colors duration-300">
                       {category.title}
                     </h3>
-                    <motion.div variants={arrowSlide}>
-                      <ArrowRight
-                        size={18}
-                        className="text-gray-300 group-hover:text-primary transition-colors duration-300"
-                      />
-                    </motion.div>
+                    <ArrowRight
+                      size={18}
+                      className="text-gray-300 group-hover:text-primary group-hover:translate-x-1 transition-all duration-300"
+                    />
                   </div>
 
                   {/* Bottom secondary line */}
                   <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-primary to-secondary scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
-                </motion.div>
+                </div>
               </Link>
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

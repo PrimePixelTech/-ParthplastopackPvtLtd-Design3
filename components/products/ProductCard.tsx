@@ -60,16 +60,16 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
           {/* Radial soft glow behind product */}
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.8)_0%,transparent_70%)] opacity-80" />
           
-          <motion.div variants={imageZoom} className="relative w-full h-full flex items-center justify-center z-10">
+          <div className="relative w-full h-full flex items-center justify-center z-10">
             <SmoothImage
               src={product.image}
               alt={product.name}
               width={240}
               height={240}
               priority={index < 4}
-              className="object-contain w-full h-full max-h-[140px] md:max-h-[180px] transition-transform duration-700 group-hover:scale-105 group-hover:-translate-y-2"
+              className="object-contain w-full h-full max-h-[140px] md:max-h-[180px] transition-transform duration-500 group-hover:scale-105 group-hover:-translate-y-1"
             />
-          </motion.div>
+          </div>
 
           {/* Badge */}
           {product.badge && (

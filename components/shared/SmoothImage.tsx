@@ -77,7 +77,7 @@ export default function SmoothImage({
   // and flexbox 0-height collapse bugs on iOS Safari / WebKit inside Framer Motion containers.
   return (
     <div
-      className={cn('relative flex items-center justify-center w-full h-full', wrapperClassName)}
+      className={cn('relative flex items-center justify-center w-full h-full min-h-0 min-w-0', wrapperClassName)}
       style={{
         WebkitTransform: 'translateZ(0)',
         transform: 'translateZ(0)',
@@ -90,22 +90,29 @@ export default function SmoothImage({
       <img
         src={activeSrc}
         alt={alt || 'Product Image'}
-        width={width}
-        height={height}
+        width={width || 200}
+        height={height || 200}
         className={imageClasses}
         onLoad={() => setIsLoaded(true)}
         onError={handleError}
-        loading={priority ? 'eager' : 'lazy'}
+        loading="eager"
         decoding="async"
+        fetchPriority={priority ? 'high' : 'auto'}
         style={{
           maxWidth: '100%',
           maxHeight: '100%',
+          width: 'auto',
+          height: 'auto',
+          aspectRatio: width && height ? `${width}/${height}` : '1/1',
           objectFit: 'contain',
           display: 'block',
+          margin: '0 auto',
           WebkitBackfaceVisibility: 'hidden',
           backfaceVisibility: 'hidden',
           WebkitTransform: 'translateZ(0)',
           transform: 'translateZ(0)',
+          opacity: 1,
+          visibility: 'visible',
         }}
       />
     </div>

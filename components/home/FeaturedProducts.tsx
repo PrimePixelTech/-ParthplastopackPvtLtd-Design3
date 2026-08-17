@@ -126,17 +126,11 @@ export default function FeaturedProducts() {
             <p className="mt-4 text-gray-500">Loading featured products...</p>
           </div>
         ) : (
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: '50px' }}
-            variants={staggerContainer}
-            className="grid grid-cols-2 lg:grid-cols-4 2xl:grid-cols-5 min-[1920px]:grid-cols-6 gap-3 md:gap-6"
-          >
+          <div className="grid grid-cols-2 lg:grid-cols-4 2xl:grid-cols-5 min-[1920px]:grid-cols-6 gap-3 md:gap-6">
             {featuredProducts.map((product, i) => (
               <ProductCard key={product.id} product={product} index={i} />
             ))}
-          </motion.div>
+          </div>
         )}
 
         {/* Mobile View All */}
