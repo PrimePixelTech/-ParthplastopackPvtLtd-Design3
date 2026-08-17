@@ -19,6 +19,17 @@ const floatingProducts = [
   { src: '/images/products/Cap.webp', alt: 'Plastic Cap', className: 'top-[30%] left-[5%] w-16 md:w-24' },
 ];
 
+const heroParticles = [
+  { top: '20%', left: '12%', duration: 5, delay: 0 },
+  { top: '45%', left: '85%', duration: 6, delay: 0.5 },
+  { top: '70%', left: '25%', duration: 4.5, delay: 1 },
+  { top: '30%', left: '70%', duration: 5.5, delay: 0.2 },
+  { top: '60%', left: '8%', duration: 6.5, delay: 1.5 },
+  { top: '80%', left: '60%', duration: 5, delay: 0.8 },
+  { top: '15%', left: '45%', duration: 4, delay: 0.3 },
+  { top: '55%', left: '40%', duration: 7, delay: 1.2 },
+];
+
 export default function HeroSection() {
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden bg-[#F9FAFB]">
@@ -81,23 +92,23 @@ export default function HeroSection() {
       ))}
 
       {/* Particles */}
-      {[...Array(8)].map((_, i) => (
+      {heroParticles.map((particle, i) => (
         <motion.div
           key={i}
           className="absolute w-1.5 h-1.5 rounded-full bg-primary/20 hidden md:block"
           style={{
-            top: `${15 + Math.random() * 70}%`,
-            left: `${5 + Math.random() * 90}%`,
+            top: particle.top,
+            left: particle.left,
           }}
           animate={{
             y: [-20, 20, -20],
             opacity: [0.2, 0.6, 0.2],
           }}
           transition={{
-            duration: 4 + Math.random() * 4,
+            duration: particle.duration,
             repeat: Infinity,
             ease: 'easeInOut',
-            delay: Math.random() * 2,
+            delay: particle.delay,
           }}
         />
       ))}

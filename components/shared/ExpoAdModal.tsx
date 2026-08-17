@@ -11,15 +11,23 @@ export default function ExpoAdModal() {
 
   useEffect(() => {
     setIsMounted(true);
-    // Check if the user has already seen the modal in this session
-    const hasSeenModal = sessionStorage.getItem('expoModalSeen');
-    if (!hasSeenModal) {
-      // Add a slight delay before showing the modal
-      const timer = setTimeout(() => {
-        setIsOpen(true);
-        sessionStorage.setItem('expoModalSeen', 'true');
-      }, 1500);
-      return () => clearTimeout(timer);
+    try {
+      if (typeof window !== 'undefined') {
+        const hasSeenModal = sessionStorage.getItem('expoModalSeen');
+        if (!hasSeenModal) {
+          const timer = setTimeout(() => {
+            setIsOpen(true);
+            try {
+              sessionStorage.setItem('expoModalSeen', 'true');
+            } catch {
+              // ignore storage errors
+            }
+          }, 2000);
+          return () => clearTimeout(timer);
+        }
+      }
+    } catch {
+      // Storage unavailable / private mode
     }
   }, []);
 

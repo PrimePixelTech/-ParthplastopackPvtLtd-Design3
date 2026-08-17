@@ -5,25 +5,39 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 
 export default function SplashScreen() {
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    setIsClient(true);
-    
-    // Check if user has already seen the splash screen in this session
-    const hasSeenSplash = sessionStorage.getItem('hasSeenSplash');
-    if (hasSeenSplash) {
-      setIsVisible(false);
+    // 1. Safe sessionStorage check (guarded against Safari Private Mode SecurityError)
+    try {
+      if (typeof window !== 'undefined') {
+        const hasSeenSplash = sessionStorage.getItem('hasSeenSplash');
+        if (hasSeenSplash) {
+          return; // Already seen in this session — do not show splash
+        }
+        sessionStorage.setItem('hasSeenSplash', 'true');
+      }
+    } catch {
+      // Storage unavailable / blocked — skip splash to prevent blocking user
       return;
     }
-    
-    sessionStorage.setItem('hasSeenSplash', 'true');
 
-    // Progress counter animation (snappy and lightweight for fast loading)
-    const duration = 300;
-    const interval = 15;
+    setIsVisible(true);
+
+    // 2. Hard timeout protection — dismiss after 400ms max regardless of state
+    const hardTimeout = setTimeout(() => {
+      setIsVisible(false);
+    }, 450);
+
+    // 3. Dismiss immediately on any user touch/scroll/keypress
+    const dismissEarly = () => setIsVisible(false);
+    window.addEventListener('touchstart', dismissEarly, { passive: true, once: true });
+    window.addEventListener('scroll', dismissEarly, { passive: true, once: true });
+
+    // 4. Snappy progress counter
+    const duration = 250;
+    const interval = 25;
     const steps = duration / interval;
     let currentStep = 0;
 
@@ -34,17 +48,21 @@ export default function SplashScreen() {
 
       if (currentStep >= steps) {
         clearInterval(timer);
-        setTimeout(() => setIsVisible(false), 100); // Hide shortly after reaching 100%
+        setTimeout(() => setIsVisible(false), 50);
       }
     }, interval);
 
-    return () => clearInterval(timer);
+    return () => {
+      clearInterval(timer);
+      clearTimeout(hardTimeout);
+      window.removeEventListener('touchstart', dismissEarly);
+      window.removeEventListener('scroll', dismissEarly);
+    };
   }, []);
 
   const text = "Premium Packaging Solutions";
 
-  // Prevent AnimatePresence exit animation on repeat visits by returning null instantly
-  if (isClient && !isVisible && progress === 0) return null;
+  if (!isVisible) return null;
 
   return (
     <AnimatePresence>

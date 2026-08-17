@@ -5,7 +5,7 @@ import Image from 'next/image';
 
 export default function Loading() {
   return (
-    <div className="fixed inset-0 z-[100] bg-white flex flex-col items-center justify-center overflow-hidden">
+    <div className="fixed inset-0 z-[100] bg-white flex flex-col items-center justify-center overflow-hidden pointer-events-none">
       {/* Animated Background Particles / Rings */}
       <motion.div
         initial={{ scale: 0.5, opacity: 0 }}
