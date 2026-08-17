@@ -42,12 +42,27 @@ export default function FactorySection() {
               className="group relative rounded-2xl overflow-hidden cursor-pointer"
               onClick={() => setLightboxIndex(i)}
             >
-              <div className="relative h-32 sm:h-48 md:h-72">
-                <Image
+              <div
+                className="relative h-32 sm:h-48 md:h-72"
+                style={{
+                  WebkitTransform: 'translateZ(0)',
+                  transform: 'translateZ(0)',
+                  isolation: 'isolate',
+                }}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
                   src={img.src}
                   alt={img.alt}
-                  fill
-                  className="object-cover group-hover:scale-110 transition-transform duration-700"
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  style={{
+                    WebkitBackfaceVisibility: 'hidden',
+                    backfaceVisibility: 'hidden',
+                    WebkitTransform: 'translateZ(0)',
+                    transform: 'translateZ(0)',
+                  }}
                 />
                 {/* Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-dark/70 via-dark/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -92,12 +107,21 @@ export default function FactorySection() {
               className="relative max-w-4xl max-h-[80vh] w-full"
               onClick={(e) => e.stopPropagation()}
             >
-              <Image
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
                 src={galleryImages[lightboxIndex].src}
                 alt={galleryImages[lightboxIndex].alt}
                 width={1200}
                 height={800}
+                loading="eager"
+                decoding="async"
                 className="w-full h-auto max-h-[80vh] object-contain rounded-lg"
+                style={{
+                  WebkitBackfaceVisibility: 'hidden',
+                  backfaceVisibility: 'hidden',
+                  WebkitTransform: 'translateZ(0)',
+                  transform: 'translateZ(0)',
+                }}
               />
               <div className="text-center mt-4">
                 <p className="text-white font-medium">{galleryImages[lightboxIndex].alt}</p>

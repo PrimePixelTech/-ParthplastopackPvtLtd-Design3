@@ -110,14 +110,26 @@ export default function CategoryShowcase({ categories, activeCategory, onCategor
                     <motion.div 
                       animate={isActive ? { scale: [1, 1.05, 1], y: [-2, 2, -2] } : {}}
                       transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                      className="relative w-full h-full p-2 md:p-3"
+                      className="relative w-full h-full flex items-center justify-center p-2 md:p-3"
+                      style={{
+                        WebkitTransform: 'translateZ(0)',
+                        transform: 'translateZ(0)',
+                        isolation: 'isolate',
+                      }}
                     >
-                      <Image
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
                         src={normalizeImageUrl(category.icon)}
                         alt={category.label}
-                        fill
-                        unoptimized
-                        className="object-contain transition-transform duration-500 group-hover:scale-110 p-1 md:p-2"
+                        loading="lazy"
+                        decoding="async"
+                        className="object-contain w-full h-full max-w-full max-h-full transition-transform duration-500 group-hover:scale-110 p-1 md:p-2"
+                        style={{
+                          WebkitBackfaceVisibility: 'hidden',
+                          backfaceVisibility: 'hidden',
+                          WebkitTransform: 'translateZ(0)',
+                          transform: 'translateZ(0)',
+                        }}
                       />
                     </motion.div>
                   ) : (

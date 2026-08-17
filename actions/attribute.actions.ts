@@ -16,11 +16,13 @@ async function checkAdmin() {
 
 export async function getAttributes() {
   try {
-    await connectDB();
+    const db = await connectDB();
+    if (!db) return [];
     const attributes = await Attribute.find().sort({ name: 1 }).lean();
     return JSON.parse(JSON.stringify(attributes));
   } catch (error: any) {
-    throw new Error(error.message);
+    console.error('getAttributes error:', error.message);
+    return [];
   }
 }
 

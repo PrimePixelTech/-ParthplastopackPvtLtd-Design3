@@ -46,6 +46,14 @@
   :focus-visible {
     @apply outline-2 outline-offset-2 outline-primary;
   }
+
+  /* iOS Safari / WebKit Image & 3D Transform Rendering Fixes */
+  img {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
 }
 
 /* ═══════════════════════════════════════════

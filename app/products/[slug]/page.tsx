@@ -8,6 +8,7 @@ import WhatsAppFloat from '@/components/shared/WhatsAppFloat';
 import ProductDetailClient from '@/components/products/ProductDetailClient';
 import { getProductBySlug, getProducts } from '@/actions/product.actions';
 import { normalizeImageUrl } from '@/lib/image-url';
+import { products as fallbackProducts } from '@/data/products';
 
 interface Props {
   params: { slug: string };
@@ -15,33 +16,35 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const dbProduct = await getProductBySlug(params.slug);
+  const staticFallback = fallbackProducts.find((p) => p.slug === params.slug);
+  const product = dbProduct || staticFallback;
   
-  if (!dbProduct) {
+  if (!product) {
     return {
       title: 'Product Not Found | Parth Plasto Pack',
       description: 'The product you are looking for does not exist.',
     };
   }
 
-  const title = `${dbProduct.name} | Parth Plasto Pack Pvt. Ltd.`;
-  const description = dbProduct.description || dbProduct.shortDescription || `Discover the high-quality ${dbProduct.name} manufactured by Parth Plasto Pack Pvt. Ltd.`;
-  const imageUrl = dbProduct.images?.[0] || 'https://www.parthplastopack.com/images/products/placeholder.webp';
+  const title = `${product.name} | Parth Plasto Pack Pvt. Ltd.`;
+  const description = product.description || (product as any).shortDescription || `Discover the high-quality ${product.name} manufactured by Parth Plasto Pack Pvt. Ltd.`;
+  const imageUrl = (dbProduct?.images?.[0]) || (staticFallback?.image) || 'https://www.parthplastopack.com/images/products/placeholder.webp';
 
   return {
     title,
     description,
-    keywords: [dbProduct.name, dbProduct.category?.title, 'plastic packaging', 'pharma packaging', 'nutraceutical packaging', 'Parth Plasto Pack'],
+    keywords: [product.name, (product as any).categoryLabel || (product as any).category?.title, 'plastic packaging', 'pharma packaging', 'nutraceutical packaging', 'Parth Plasto Pack'],
     openGraph: {
       title,
       description,
-      url: `https://www.parthplastopack.com/products/${dbProduct.slug}`,
+      url: `https://www.parthplastopack.com/products/${product.slug}`,
       siteName: 'Parth Plasto Pack Pvt. Ltd.',
       images: [
         {
           url: imageUrl,
           width: 800,
           height: 600,
-          alt: dbProduct.name,
+          alt: product.name,
         }
       ],
       type: 'website',
@@ -57,8 +60,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProductDetailPage({ params }: Props) {
   const dbProduct = await getProductBySlug(params.slug);
+  const staticFallback = fallbackProducts.find((p) => p.slug === params.slug);
   
-  if (!dbProduct) {
+  if (!dbProduct && !staticFallback) {
     return (
       <>
         <Navbar />
@@ -77,35 +81,38 @@ export default async function ProductDetailPage({ params }: Props) {
     );
   }
 
-  // Map DB schema to frontend schema
-  const primaryImage = normalizeImageUrl(dbProduct.images?.[0]);
-  const galleryImages = Array.isArray(dbProduct.images) && dbProduct.images.length > 0
-    ? dbProduct.images.map((img: string) => normalizeImageUrl(img))
-    : [primaryImage];
+  // Map DB or static schema to frontend schema
+  const primaryImage = normalizeImageUrl(
+    dbProduct?.images?.[0] || staticFallback?.image
+  );
+  const rawGallery = dbProduct?.images?.length
+    ? dbProduct.images
+    : staticFallback?.gallery || [primaryImage];
+  const galleryImages = rawGallery.map((img: string) => normalizeImageUrl(img));
 
   const mappedProduct = {
-    id: dbProduct._id.toString(),
-    name: dbProduct.name,
-    slug: dbProduct.slug,
-    categoryId: dbProduct.category?._id?.toString() || 'other',
-    categoryLabel: dbProduct.category?.title || 'Other',
+    id: dbProduct?._id?.toString() || staticFallback?.id?.toString() || '1',
+    name: dbProduct?.name || staticFallback?.name || '',
+    slug: dbProduct?.slug || staticFallback?.slug || params.slug,
+    categoryId: dbProduct?.category?._id?.toString() || (staticFallback as any)?.category || 'other',
+    categoryLabel: dbProduct?.category?.title || (staticFallback as any)?.categoryLabel || 'Other',
     image: primaryImage,
     gallery: galleryImages,
-    badge: dbProduct.isFeatured ? 'Featured' : dbProduct.isTrending ? 'Trending' : '',
-    description: dbProduct.description || dbProduct.shortDescription || 'No description available.',
-    overFlowVolume: dbProduct.specifications?.overFlowVolume || '',
-    heightOfContainer: dbProduct.specifications?.heightOfContainer || '',
-    neckSize: dbProduct.specifications?.neckSize || '',
-    maximumDiaOfContainer: dbProduct.specifications?.maximumDiaOfContainer || '',
-    wallThickness: dbProduct.specifications?.wallThickness || '',
-    capFitting: dbProduct.specifications?.capFitting || '',
-    labelType: dbProduct.specifications?.labelType || '',
-    weightOfContainer: dbProduct.specifications?.weightOfContainer || '',
-    powderVolume: dbProduct.specifications?.powderVolume || '',
-    material: dbProduct.specifications?.material || '',
-    moq: dbProduct.moq || 1000,
-    features: dbProduct.features || [],
-    applications: dbProduct.applications || [],
+    badge: dbProduct?.isFeatured ? 'Featured' : dbProduct?.isTrending ? 'Trending' : (staticFallback as any)?.badge || '',
+    description: dbProduct?.description || dbProduct?.shortDescription || staticFallback?.description || 'No description available.',
+    overFlowVolume: dbProduct?.specifications?.overFlowVolume || (staticFallback as any)?.capacity || '',
+    heightOfContainer: dbProduct?.specifications?.heightOfContainer || '',
+    neckSize: dbProduct?.specifications?.neckSize || '',
+    maximumDiaOfContainer: dbProduct?.specifications?.maximumDiaOfContainer || '',
+    wallThickness: dbProduct?.specifications?.wallThickness || '',
+    capFitting: dbProduct?.specifications?.capFitting || '',
+    labelType: dbProduct?.specifications?.labelType || '',
+    weightOfContainer: dbProduct?.specifications?.weightOfContainer || (staticFallback as any)?.weight || '',
+    powderVolume: dbProduct?.specifications?.powderVolume || '',
+    material: dbProduct?.specifications?.material || staticFallback?.material || '',
+    moq: dbProduct?.moq || staticFallback?.moq || 1000,
+    features: dbProduct?.features || staticFallback?.features || [],
+    applications: dbProduct?.applications || staticFallback?.applications || [],
   };
 
   // Fetch related products

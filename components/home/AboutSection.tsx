@@ -26,13 +26,29 @@ export default function AboutSection() {
           {/* Left — Image */}
           <ScrollReveal variant="slideLeft">
             <div className="relative">
-              <div className="relative rounded-3xl overflow-hidden shadow-premium-lg">
-                <Image
+              <div
+                className="relative rounded-3xl overflow-hidden shadow-premium-lg"
+                style={{
+                  WebkitTransform: 'translateZ(0)',
+                  transform: 'translateZ(0)',
+                  isolation: 'isolate',
+                }}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
                   src="/images/factoryy.webp"
                   alt="Parth Plasto Pack Manufacturing Facility"
                   width={640}
                   height={480}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-[400px] md:h-[500px] object-cover"
+                  style={{
+                    WebkitBackfaceVisibility: 'hidden',
+                    backfaceVisibility: 'hidden',
+                    WebkitTransform: 'translateZ(0)',
+                    transform: 'translateZ(0)',
+                  }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-dark/30 to-transparent" />
               </div>

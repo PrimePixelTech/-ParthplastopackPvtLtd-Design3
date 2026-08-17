@@ -223,12 +223,19 @@ export default function ImageUploader({
             key={idx}
             className="group relative aspect-square rounded-xl border border-gray-200 bg-gray-50 overflow-hidden shadow-sm flex items-center justify-center"
           >
-            <Image
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
               src={imgUrl}
               alt={`Uploaded ${idx + 1}`}
-              fill
-              unoptimized
-              className="object-contain p-2 transition-transform duration-300 group-hover:scale-105"
+              loading="lazy"
+              decoding="async"
+              className="object-contain w-full h-full max-w-full max-h-full p-2 transition-transform duration-300 group-hover:scale-105"
+              style={{
+                WebkitBackfaceVisibility: 'hidden',
+                backfaceVisibility: 'hidden',
+                WebkitTransform: 'translateZ(0)',
+                transform: 'translateZ(0)',
+              }}
             />
 
             {/* Badge for main image */}
@@ -349,13 +356,21 @@ export default function ImageUploader({
               <X size={20} />
             </button>
             <div className="relative w-full h-full max-h-[80vh] flex items-center justify-center bg-white/5 rounded-2xl overflow-hidden p-4">
-              <Image
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
                 src={previewModalUrl}
                 alt="Enlarged Preview"
                 width={800}
                 height={800}
-                unoptimized
+                loading="eager"
+                decoding="async"
                 className="max-w-full max-h-[75vh] object-contain rounded-lg"
+                style={{
+                  WebkitBackfaceVisibility: 'hidden',
+                  backfaceVisibility: 'hidden',
+                  WebkitTransform: 'translateZ(0)',
+                  transform: 'translateZ(0)',
+                }}
               />
             </div>
           </div>

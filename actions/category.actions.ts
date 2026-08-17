@@ -29,11 +29,14 @@ export async function getCategories() {
 
 export async function getCategory(id: string) {
   try {
-    await connectDB();
+    const db = await connectDB();
+    if (!db) return null;
     const category = await Category.findById(id).lean();
+    if (!category) return null;
     return JSON.parse(JSON.stringify(category));
   } catch (error: any) {
-    throw new Error(error.message);
+    console.error('getCategory error:', error.message);
+    return null;
   }
 }
 

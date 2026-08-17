@@ -83,9 +83,13 @@ export default function ProductCategories() {
                   whileHover="hover"
                   initial="rest"
                   className="group relative rounded-2xl overflow-hidden bg-white border border-gray-100 shadow-card hover:shadow-card-hover transition-all duration-500 cursor-pointer h-full"
+                  style={{ WebkitTransform: 'translateZ(0)', transform: 'translateZ(0)' }}
                 >
                   {/* Image */}
-                  <div className="relative h-48 sm:h-52 md:h-56 overflow-hidden bg-gradient-to-br from-gray-50 to-white flex items-center justify-center p-4 sm:p-6">
+                  <div
+                    className="relative h-48 sm:h-52 md:h-56 overflow-hidden bg-gradient-to-br from-gray-50 to-white flex items-center justify-center p-4 sm:p-6"
+                    style={{ WebkitTransform: 'translateZ(0)', transform: 'translateZ(0)', isolation: 'isolate' }}
+                  >
                     <motion.div variants={imageZoom} className="w-full h-full flex items-center justify-center">
                       <SmoothImage
                         src={category.image}
@@ -93,8 +97,7 @@ export default function ProductCategories() {
                         width={200}
                         height={200}
                         priority={i < 4}
-                        unoptimized
-                        className="object-contain w-auto h-auto max-w-full max-h-36 sm:max-h-40"
+                        className="object-contain max-w-full max-h-36 sm:max-h-40 w-auto h-auto"
                       />
                     </motion.div>
 

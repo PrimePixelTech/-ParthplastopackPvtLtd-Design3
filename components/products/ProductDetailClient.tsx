@@ -124,7 +124,22 @@ export default function ProductDetailClient({ product, relatedProducts }: Produc
                       : 'border-gray-100 hover:border-gray-300'
                   }`}
                 >
-                  <Image src={img} alt="" width={60} height={60} unoptimized className="object-contain w-full h-full" />
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={normalizeImageUrl(img)}
+                    alt={`Thumbnail ${i + 1}`}
+                    width={60}
+                    height={60}
+                    loading="lazy"
+                    decoding="async"
+                    className="object-contain w-full h-full max-h-16"
+                    style={{
+                      WebkitBackfaceVisibility: 'hidden',
+                      backfaceVisibility: 'hidden',
+                      WebkitTransform: 'translateZ(0)',
+                      transform: 'translateZ(0)',
+                    }}
+                  />
                 </button>
               ))}
             </div>

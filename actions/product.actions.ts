@@ -29,21 +29,27 @@ export async function getProducts() {
 
 export async function getProduct(id: string) {
   try {
-    await connectDB();
+    const db = await connectDB();
+    if (!db) return null;
     const product = await Product.findById(id).lean();
+    if (!product) return null;
     return JSON.parse(JSON.stringify(product));
   } catch (error: any) {
-    throw new Error(error.message);
+    console.error('getProduct error:', error.message);
+    return null;
   }
 }
 
 export async function getProductBySlug(slug: string) {
   try {
-    await connectDB();
+    const db = await connectDB();
+    if (!db) return null;
     const product = await Product.findOne({ slug }).populate({ path: 'category', model: Category, select: 'title' }).lean();
+    if (!product) return null;
     return JSON.parse(JSON.stringify(product));
   } catch (error: any) {
-    throw new Error(error.message);
+    console.error('getProductBySlug error:', error.message);
+    return null;
   }
 }
 

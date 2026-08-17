@@ -53,7 +53,10 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
         <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-primary/20 transition-colors duration-500 pointer-events-none z-20" />
 
         {/* Stage Lighting / Image Area */}
-        <div className="relative h-48 md:h-64 bg-gradient-to-b from-[#F9FAFB] to-[#F3F4F6] flex items-center justify-center p-6 overflow-hidden">
+        <div
+          className="relative h-48 md:h-64 bg-gradient-to-b from-[#F9FAFB] to-[#F3F4F6] flex items-center justify-center p-6 overflow-hidden"
+          style={{ WebkitTransform: 'translateZ(0)', transform: 'translateZ(0)', isolation: 'isolate' }}
+        >
           {/* Radial soft glow behind product */}
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.8)_0%,transparent_70%)] opacity-80" />
           
@@ -63,7 +66,6 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
               alt={product.name}
               width={240}
               height={240}
-              unoptimized
               className="object-contain w-full h-full max-h-[140px] md:max-h-[180px] transition-transform duration-700 group-hover:scale-105 group-hover:-translate-y-2"
             />
           </motion.div>

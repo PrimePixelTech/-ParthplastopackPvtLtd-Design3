@@ -38,12 +38,21 @@ export default function ClientLogos() {
               key={`r1-${i}`}
               className="flex items-center gap-3 px-6 py-3 mx-2 rounded-xl bg-gray-50 border border-gray-100 hover:border-primary/20 hover:shadow-sm transition-all duration-300 shrink-0"
             >
-              <Image
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
                 src={client.src}
                 alt={client.name}
                 width={32}
                 height={32}
+                loading="lazy"
+                decoding="async"
                 className="w-8 h-8 object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all"
+                style={{
+                  WebkitBackfaceVisibility: 'hidden',
+                  backfaceVisibility: 'hidden',
+                  WebkitTransform: 'translateZ(0)',
+                  transform: 'translateZ(0)',
+                }}
               />
               <span className="text-sm font-medium text-gray-400 whitespace-nowrap">{client.name}</span>
             </div>
@@ -59,12 +68,21 @@ export default function ClientLogos() {
               key={`r2-${i}`}
               className="flex items-center gap-3 px-6 py-3 mx-2 rounded-xl bg-gray-50 border border-gray-100 hover:border-primary/20 hover:shadow-sm transition-all duration-300 shrink-0"
             >
-              <Image
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
                 src={client.src}
                 alt={client.name}
                 width={32}
                 height={32}
+                loading="lazy"
+                decoding="async"
                 className="w-8 h-8 object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all"
+                style={{
+                  WebkitBackfaceVisibility: 'hidden',
+                  backfaceVisibility: 'hidden',
+                  WebkitTransform: 'translateZ(0)',
+                  transform: 'translateZ(0)',
+                }}
               />
               <span className="text-sm font-medium text-gray-400 whitespace-nowrap">{client.name}</span>
             </div>
