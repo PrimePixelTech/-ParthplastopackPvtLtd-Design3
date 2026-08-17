@@ -72,7 +72,7 @@ export default function ProductCategories() {
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: '-50px' }}
+          viewport={{ once: true, margin: '50px' }}
           variants={staggerContainer}
           className="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 min-[1920px]:grid-cols-5 gap-3 md:gap-6"
         >
@@ -96,7 +96,7 @@ export default function ProductCategories() {
                         alt={category.title}
                         width={200}
                         height={200}
-                        priority={i < 4}
+                        priority={true}
                         className="object-contain max-w-full max-h-36 sm:max-h-40 w-auto h-auto"
                       />
                     </motion.div>

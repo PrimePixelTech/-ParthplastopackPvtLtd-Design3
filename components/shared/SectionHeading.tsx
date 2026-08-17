@@ -25,7 +25,7 @@ export default function SectionHeading({
     <motion.div
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, margin: '-50px' }}
+      viewport={{ once: true, margin: '50px' }}
       variants={fadeUp}
       className={cn(
         'mb-14 md:mb-16',

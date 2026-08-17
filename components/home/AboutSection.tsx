@@ -93,7 +93,7 @@ export default function AboutSection() {
               <motion.div
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true, margin: '-30px' }}
+                viewport={{ once: true, margin: '50px' }}
                 variants={staggerContainer}
                 className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-3"
               >

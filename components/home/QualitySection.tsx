@@ -23,7 +23,7 @@ const qualityMetrics = [
 
 function ProgressBar({ label, value, color }: { label: string; value: number; color: string }) {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '-50px' });
+  const isInView = useInView(ref, { once: true, margin: '50px' });
 
   return (
     <div ref={ref} className="space-y-2">

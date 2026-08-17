@@ -169,7 +169,7 @@ export const pageTransition: Variants = {
 export const parallaxY = (offset: number = 50) => ({
   initial: { y: offset },
   whileInView: { y: 0 },
-  viewport: { once: false, margin: '-100px' },
+  viewport: { once: false, margin: '50px' },
   transition: { duration: 1, ease: [0.16, 1, 0.3, 1] },
 });
 
