@@ -1,8 +1,10 @@
 'use client';
 
+import { useRef } from 'react';
 import { motion, type Variants } from 'framer-motion';
 import { ReactNode } from 'react';
 import { cn } from '@/lib/utils';
+import { useSafeInView } from '@/hooks/useSafeInView';
 
 interface ScrollRevealProps {
   children: ReactNode;
@@ -48,11 +50,18 @@ export default function ScrollReveal({
   className,
   once = true,
 }: ScrollRevealProps) {
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useSafeInView(ref, {
+    once,
+    margin: '100px',
+    fallbackMs: 2500,
+  });
+
   return (
     <motion.div
+      ref={ref}
       initial="hidden"
-      whileInView="visible"
-      viewport={{ once, margin: '50px' }}
+      animate={isInView ? 'visible' : 'hidden'}
       variants={variants[variant]}
       transition={{
         duration,

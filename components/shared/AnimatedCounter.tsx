@@ -1,8 +1,9 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import { useSafeInView } from '@/hooks/useSafeInView';
 
 interface AnimatedCounterProps {
   end: number;
@@ -22,7 +23,12 @@ export default function AnimatedCounter({
   className,
 }: AnimatedCounterProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '50px' });
+  const isInView = useSafeInView(ref, {
+    once: true,
+    margin: '100px',
+    // Counters must never stay at 0 — force trigger after 2s max
+    fallbackMs: 2000,
+  });
   const [count, setCount] = useState(0);
 
   useEffect(() => {

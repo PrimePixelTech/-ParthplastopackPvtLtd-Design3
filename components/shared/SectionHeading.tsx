@@ -1,8 +1,10 @@
 'use client';
 
+import { useRef } from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { fadeUp } from '@/lib/animations';
+import { useSafeInView } from '@/hooks/useSafeInView';
 
 interface SectionHeadingProps {
   badge?: string;
@@ -21,11 +23,18 @@ export default function SectionHeading({
   light = false,
   className,
 }: SectionHeadingProps) {
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useSafeInView(ref, {
+    once: true,
+    margin: '100px',
+    fallbackMs: 2500,
+  });
+
   return (
     <motion.div
+      ref={ref}
       initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: '50px' }}
+      animate={isInView ? 'visible' : 'hidden'}
       variants={fadeUp}
       className={cn(
         'mb-14 md:mb-16',

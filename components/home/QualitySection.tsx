@@ -1,7 +1,8 @@
 'use client';
 
-import { motion, useInView } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useRef } from 'react';
+import { useSafeInView } from '@/hooks/useSafeInView';
 import { Shield, Award, FlaskConical, FileCheck, CheckCircle2 } from 'lucide-react';
 import SectionHeading from '@/components/shared/SectionHeading';
 import ScrollReveal from '@/components/shared/ScrollReveal';
@@ -23,7 +24,7 @@ const qualityMetrics = [
 
 function ProgressBar({ label, value, color }: { label: string; value: number; color: string }) {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '50px' });
+  const isInView = useSafeInView(ref, { once: true, margin: '100px', fallbackMs: 2500 });
 
   return (
     <div ref={ref} className="space-y-2">
