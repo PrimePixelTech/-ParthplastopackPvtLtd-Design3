@@ -11,7 +11,7 @@ async function connectDB() {
 
   if (!MONGODB_URI) {
     console.warn('MONGODB_URI is not defined');
-    return null;
+    throw new Error('MONGODB_URI is not defined in environment variables');
   }
 
   if (cached.conn && mongoose.connection.readyState === 1) {
