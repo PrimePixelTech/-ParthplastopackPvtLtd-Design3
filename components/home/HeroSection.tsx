@@ -33,8 +33,8 @@ const heroParticles = [
 export default function HeroSection() {
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden bg-[#F9FAFB]">
-      {/* Aurora Background Orbs */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+      {/* Aurora Background Orbs (Hidden on mobile to ensure 60fps scrolling performance) */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0 hidden md:block">
         <motion.div
           animate={{
             scale: [1, 1.2, 1],

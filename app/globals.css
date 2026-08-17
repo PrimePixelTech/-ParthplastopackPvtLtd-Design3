@@ -321,8 +321,17 @@
   inset: 0;
   pointer-events: none;
   z-index: 100;
-  opacity: 0.015;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.02;
+  /* Use a much lighter base64 PNG instead of an expensive SVG feTurbulence filter */
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyBAMAAADsEZWCAAAAElBMVEUAAAAAAAAAAAAAAAAAAAAAAADgKxmiAAAABnRSTlMDY2NjY2Mjx32LAAAAQUlEQVQ4y2NgwALG/4f9QyQdY2NjA2NjjgGMY2NjA2NjjkEMjI25BjEwNuYYzMDYmGsIA2NjriEOjI25hjgYG3MNAT5Z/74kQ5oFAAAAAElFTkSuQmCC");
+  background-size: 64px 64px;
+}
+
+@media (max-width: 768px) {
+  /* Disable entirely on mobile to save GPU cycles and ensure smooth 60fps scrolling */
+  .noise-overlay {
+    display: none;
+  }
 }
 
 /* Hero Wave Divider */
