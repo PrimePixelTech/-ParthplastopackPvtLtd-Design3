@@ -25,19 +25,19 @@ export default function SplashScreen() {
 
     setIsVisible(true);
 
-    // 2. Hard timeout protection — dismiss after 400ms max regardless of state
+    // 2. Hard timeout protection — dismiss after 2500ms max to allow background loading
     const hardTimeout = setTimeout(() => {
       setIsVisible(false);
-    }, 450);
+    }, 2500);
 
     // 3. Dismiss immediately on any user touch/scroll/keypress
     const dismissEarly = () => setIsVisible(false);
     window.addEventListener('touchstart', dismissEarly, { passive: true, once: true });
     window.addEventListener('scroll', dismissEarly, { passive: true, once: true });
 
-    // 4. Snappy progress counter
-    const duration = 250;
-    const interval = 25;
+    // 4. Smooth progress counter over 2 seconds
+    const duration = 2000;
+    const interval = 40;
     const steps = duration / interval;
     let currentStep = 0;
 
